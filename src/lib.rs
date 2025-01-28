@@ -29,6 +29,9 @@ pub fn u64_to_str(value: u64) -> String {
     }
 }
 
+/// str_to_u64 turns a String of at most 11 characters to a u64 value.
+/// It does this by using a base64 alphabet.
+/// It does not overflow even at the maximum base64 value, which is u66.
 pub fn str_to_u64<T>(input: T) -> Option<u64>
 where
     T: Into<String>,
@@ -62,6 +65,7 @@ mod tests {
         assert_eq!(&u64_to_str(0), "AAAAAAAAAAA");
         assert_eq!(&u64_to_str(u64::MAX), "P__________");
         assert_eq!(str_to_u64("P__________"), Some(u64::MAX));
+        println!("{}", str_to_u64("___________").unwrap());
         assert!(str_to_u64("🇽s🇰🏳️‍🐱⚧️").is_none());
     }
 }
